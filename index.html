@@ -15,7 +15,6 @@
     :root {
       --bg-900: #0d0f12;
       --bg-800: #16191e;
-      --bg-700: #1f242b;
       --ink: #e8eaed;
       --ink-dim: #9aa0a8;
       --metal: #c7ccd1;
@@ -23,22 +22,19 @@
       --accent: #36e27b;        /* verde spray */
       --accent-2: #ff7a2f;      /* naranja graffiti */
       --line: rgba(255,255,255,0.08);
-      --radius: 16px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html { background: var(--bg-900); scroll-behavior: smooth; }
+    html, body { height: 100%; width: 100%; overflow: hidden; background: var(--bg-900); }
 
     body {
       font-family: 'Oswald', sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(54,226,123,0.10), transparent 60%),
-        radial-gradient(900px 500px at -10% 20%, rgba(255,122,47,0.08), transparent 55%),
+        radial-gradient(1200px 600px at 80% -10%, rgba(54,226,123,0.12), transparent 60%),
+        radial-gradient(900px 500px at -10% 20%, rgba(255,122,47,0.10), transparent 55%),
         linear-gradient(180deg, var(--bg-900), var(--bg-800));
-      min-height: 100vh;
-      overflow-x: hidden;
       position: relative;
     }
 
@@ -57,106 +53,106 @@
     .spray {
       position: fixed;
       border-radius: 50%;
-      filter: blur(60px);
+      filter: blur(70px);
       opacity: 0.35;
       z-index: 0;
       pointer-events: none;
       animation: drift 18s ease-in-out infinite alternate;
     }
-    .spray.s1 { width: 320px; height: 320px; background: var(--accent); top: 10%; right: -80px; }
-    .spray.s2 { width: 280px; height: 280px; background: var(--accent-2); bottom: 5%; left: -90px; animation-delay: -6s; }
+    .spray.s1 { width: 28vw; height: 28vw; background: var(--accent); top: -6vh; right: -5vw; }
+    .spray.s2 { width: 26vw; height: 26vw; background: var(--accent-2); bottom: -8vh; left: -6vw; animation-delay: -6s; }
 
     @keyframes drift {
       from { transform: translate3d(0,0,0) scale(1); }
-      to   { transform: translate3d(0,-40px,0) scale(1.15); }
+      to   { transform: translate3d(0,-3vh,0) scale(1.15); }
     }
 
-    .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-
-    /* ---------- HERO ---------- */
-    header.hero {
-      min-height: 78vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 20px 40px;
+    /* ---------- LAYOUT GENERAL (sin scroll) ---------- */
+    .screen {
       position: relative;
+      z-index: 1;
+      height: 100vh;
+      width: 100vw;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 2.2vh 2.4vw;
+      gap: 1.6vh;
     }
 
+    /* ---------- HEADER ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2vw;
+    }
+    .brand { display: flex; align-items: center; gap: 1.4vw; }
     .logo {
-      width: min(560px, 90vw);
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
-      animation: logoIn 1s cubic-bezier(.2,.7,.2,1) both, float 6s ease-in-out infinite 1s;
+      height: 12vh;
+      width: auto;
+      filter: drop-shadow(0 0.6vh 1.6vh rgba(0,0,0,0.6));
+      animation: logoIn .9s cubic-bezier(.2,.7,.2,1) both, float 6s ease-in-out infinite 1s;
+    }
+    .tagline {
+      font-family: 'Permanent Marker', cursive;
+      color: var(--accent);
+      font-size: 2.4vh;
+      letter-spacing: 1px;
+      text-shadow: 0 0 1.4vh rgba(54,226,123,0.45);
+      animation: fadeUp .9s ease .35s both;
+    }
+    .clock {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4vh;
+      letter-spacing: 2px;
+      color: var(--metal);
+      animation: fadeUp .9s ease .45s both;
     }
 
     @keyframes logoIn {
-      from { opacity: 0; transform: translateY(30px) scale(.92) rotate(-2deg); filter: blur(8px); }
+      from { opacity: 0; transform: translateY(3vh) scale(.92) rotate(-2deg); filter: blur(8px); }
       to   { opacity: 1; transform: translateY(0) scale(1) rotate(0); filter: blur(0); }
     }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%     { transform: translateY(-12px); }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1vh)} }
+    @keyframes fadeUp { from{opacity:0; transform:translateY(2vh)} to{opacity:1; transform:translateY(0)} }
+
+    /* ---------- COLUMNAS DE MENÚ ---------- */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6vw;
+      min-height: 0;
     }
-
-    .tagline {
-      margin-top: 18px;
-      font-family: 'Permanent Marker', cursive;
-      letter-spacing: 1px;
-      color: var(--accent);
-      font-size: clamp(18px, 3vw, 28px);
-      text-shadow: 0 0 18px rgba(54,226,123,0.45);
-      animation: fadeUp 1s ease .5s both;
-    }
-
-    .scroll-cue {
-      margin-top: 40px;
-      color: var(--ink-dim);
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      animation: fadeUp 1s ease .8s both;
-    }
-    .scroll-cue span { display:block; margin-top: 8px; font-size: 22px; animation: bounce 1.6s infinite; }
-
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
-    @keyframes fadeUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
-
-    /* ---------- SECCIONES ---------- */
-    .menu { padding: 30px 0 90px; }
+    .col { display: flex; flex-direction: column; gap: 1.4vh; min-height: 0; }
 
     .cat {
-      margin-bottom: 56px;
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    .cat.in { animation: fadeUp .7s cubic-bezier(.2,.7,.2,1) forwards; }
-
-    .cat-head {
       display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 26px;
+      flex-direction: column;
+      gap: 0.8vh;
+      opacity: 0;
+      transform: translateY(3vh);
+      animation: fadeUp .7s cubic-bezier(.2,.7,.2,1) forwards;
     }
+
+    .cat-head { display: flex; align-items: center; gap: 1vw; }
     .cat-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(34px, 6vw, 58px);
-      letter-spacing: 2px;
+      font-size: 4.4vh;
+      letter-spacing: 1.5px;
       line-height: .9;
       background: linear-gradient(180deg, var(--metal), var(--metal-dark));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.4);
       position: relative;
+      white-space: nowrap;
     }
     .cat-title::after {
       content: attr(data-tag);
       position: absolute;
-      left: 4px; top: -14px;
+      left: 0.2vw; top: -1.6vh;
       font-family: 'Permanent Marker', cursive;
-      font-size: 13px;
+      font-size: 1.5vh;
       -webkit-text-fill-color: var(--accent-2);
       color: var(--accent-2);
       transform: rotate(-6deg);
@@ -164,24 +160,17 @@
     }
     .cat-line { flex: 1; height: 2px; background: linear-gradient(90deg, var(--line), transparent); }
 
-    .items {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    @media (min-width: 720px) {
-      .items { grid-template-columns: 1fr 1fr; gap: 16px 36px; }
-    }
+    .items { display: flex; flex-direction: column; gap: 0.7vh; }
 
     .item {
       display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1vw;
+      padding: 0.9vh 1vw;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012));
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+      border-radius: 1vh;
       position: relative;
       overflow: hidden;
     }
@@ -189,41 +178,25 @@
       content:"";
       position:absolute; left:0; top:0; bottom:0; width:3px;
       background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform .3s ease;
     }
-    .item:hover {
-      transform: translateY(-4px);
-      border-color: rgba(54,226,123,0.4);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(54,226,123,0.15);
-    }
-    .item:hover::before { transform: scaleY(1); }
-
-    .item-body { flex: 1; min-width: 0; }
-    .item-top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-    .item-name {
-      font-weight: 600;
-      font-size: 17px;
-      letter-spacing: .3px;
-    }
+    .item-name { font-weight: 600; font-size: 2.1vh; letter-spacing: .3px; }
+    .item-desc { color: var(--ink-dim); font-size: 1.5vh; font-weight: 300; margin-top: 0.2vh; }
     .item-price {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
+      font-size: 2.8vh;
       letter-spacing: 1px;
       color: var(--accent);
       white-space: nowrap;
     }
-    .item-desc { color: var(--ink-dim); font-size: 13.5px; margin-top: 4px; font-weight: 300; }
 
     .badge {
       display:inline-block;
-      font-size: 10px;
+      font-size: 1.2vh;
       letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 2px 8px;
+      padding: 0.1vh 0.6vw;
       border-radius: 999px;
-      margin-left: 8px;
+      margin-left: 0.5vw;
       vertical-align: middle;
       background: rgba(255,122,47,0.15);
       color: var(--accent-2);
@@ -231,215 +204,177 @@
     }
 
     /* ---------- FOOTER ---------- */
-    footer {
-      text-align:center;
-      padding: 40px 20px 60px;
+    .footbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2vw;
       color: var(--ink-dim);
+      font-size: 1.6vh;
+      letter-spacing: 1px;
       border-top: 1px solid var(--line);
-      font-size: 13px;
-      letter-spacing: 1px;
+      padding-top: 1.2vh;
+      animation: fadeUp .9s ease .6s both;
     }
-    footer .mark {
-      font-family:'Permanent Marker', cursive;
-      color: var(--metal);
-      font-size: 18px;
-      letter-spacing: 1px;
-    }
-    .note {
-      max-width: 760px; margin: 0 auto 30px;
-      background: rgba(255,122,47,0.07);
-      border: 1px dashed rgba(255,122,47,0.4);
-      color: var(--ink-dim);
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-size: 13px;
-      text-align: center;
-    }
-    .note b { color: var(--accent-2); }
+    .footbar .mark { font-family:'Permanent Marker', cursive; color: var(--metal); font-size: 2.2vh; }
+
+    /* Retrasos escalonados de entrada */
+    .col:nth-child(1) .cat:nth-child(1) { animation-delay: .25s; }
+    .col:nth-child(1) .cat:nth-child(2) { animation-delay: .35s; }
+    .col:nth-child(2) .cat:nth-child(1) { animation-delay: .40s; }
+    .col:nth-child(2) .cat:nth-child(2) { animation-delay: .50s; }
+    .col:nth-child(3) .cat:nth-child(1) { animation-delay: .55s; }
+    .col:nth-child(3) .cat:nth-child(2) { animation-delay: .65s; }
   </style>
 </head>
 <body>
   <div class="spray s1"></div>
   <div class="spray s2"></div>
 
-  <div class="wrap">
-    <!-- HERO -->
-    <header class="hero">
-      <img class="logo" src="assets/crazy-spot-logo.png" alt="Crazy Spot — logo del social club" />
-      <p class="tagline">Tu spot. Tu vibra.</p>
-      <div class="scroll-cue">Desliza<span>&#8595;</span></div>
+  <div class="screen">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand">
+        <img class="logo" src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Captura%20de%20pantalla%202026-06-15%20075355-652MYLWERpsTtgHuQnJGx14VUwAnXH.png" alt="Crazy Spot — logo del social club" crossorigin="anonymous" />
+        <span class="tagline">Tu spot. Tu vibra.</span>
+      </div>
+      <div class="clock" id="clock">--:--</div>
     </header>
 
-    <!-- MENU -->
-    <main class="menu">
+    <!-- BOARD -->
+    <main class="board">
 
-      <div class="note">
-        Este es un menú de muestra editable. <b>Pásame tus productos y precios</b> y los reemplazo por los reales.
+      <!-- COLUMNA 1 -->
+      <div class="col">
+        <section class="cat">
+          <div class="cat-head">
+            <h2 class="cat-title" data-tag="top shelf">Flores</h2>
+            <div class="cat-line"></div>
+          </div>
+          <div class="items">
+            <article class="item">
+              <div><div class="item-name">Amnesia Haze <span class="badge">Sativa</span></div><p class="item-desc">Cítrica y energética.</p></div>
+              <span class="item-price">10€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Gelato 41 <span class="badge">Híbrida</span></div><p class="item-desc">Dulce y equilibrada.</p></div>
+              <span class="item-price">12€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Northern Lights <span class="badge">Indica</span></div><p class="item-desc">Relajante, de noche.</p></div>
+              <span class="item-price">9€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Wedding Cake <span class="badge">Indica</span></div><p class="item-desc">Terrosa y potente.</p></div>
+              <span class="item-price">12€/g</span>
+            </article>
+          </div>
+        </section>
       </div>
 
-      <!-- FLORES -->
-      <section class="cat">
-        <div class="cat-head">
-          <h2 class="cat-title" data-tag="top shelf">Flores</h2>
-          <div class="cat-line"></div>
-        </div>
-        <div class="items">
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Amnesia Haze <span class="badge">Sativa</span></span><span class="item-price">10€/g</span></div>
-              <p class="item-desc">Cítrica y energética, efecto cerebral.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Gelato 41 <span class="badge">Híbrida</span></span><span class="item-price">12€/g</span></div>
-              <p class="item-desc">Dulce y cremosa, equilibrada.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Northern Lights <span class="badge">Indica</span></span><span class="item-price">9€/g</span></div>
-              <p class="item-desc">Relajante, ideal para la noche.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Wedding Cake <span class="badge">Indica</span></span><span class="item-price">12€/g</span></div>
-              <p class="item-desc">Terroso y dulce, muy potente.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      <!-- COLUMNA 2 -->
+      <div class="col">
+        <section class="cat">
+          <div class="cat-head">
+            <h2 class="cat-title" data-tag="premium">Hash</h2>
+            <div class="cat-line"></div>
+          </div>
+          <div class="items">
+            <article class="item">
+              <div><div class="item-name">Bubble Hash</div><p class="item-desc">Agua-hielo, full melt.</p></div>
+              <span class="item-price">15€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Dry Sift</div><p class="item-desc">Tamizado en seco.</p></div>
+              <span class="item-price">12€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Marroquí</div><p class="item-desc">Clásico y suave.</p></div>
+              <span class="item-price">8€/g</span>
+            </article>
+          </div>
+        </section>
 
-      <!-- HASH -->
-      <section class="cat">
-        <div class="cat-head">
-          <h2 class="cat-title" data-tag="premium">Hash</h2>
-          <div class="cat-line"></div>
-        </div>
-        <div class="items">
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Bubble Hash</span><span class="item-price">15€/g</span></div>
-              <p class="item-desc">Extracción en agua-hielo, full melt.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Dry Sift</span><span class="item-price">12€/g</span></div>
-              <p class="item-desc">Tamizado en seco, aromático.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Marroquí</span><span class="item-price">8€/g</span></div>
-              <p class="item-desc">Clásico, suave y balanceado.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+        <section class="cat">
+          <div class="cat-head">
+            <h2 class="cat-title" data-tag="dabs">Extracciones</h2>
+            <div class="cat-line"></div>
+          </div>
+          <div class="items">
+            <article class="item">
+              <div><div class="item-name">Live Rosin</div><p class="item-desc">Sin solventes.</p></div>
+              <span class="item-price">25€/g</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Shatter</div><p class="item-desc">Cristalina y potente.</p></div>
+              <span class="item-price">20€/g</span>
+            </article>
+          </div>
+        </section>
+      </div>
 
-      <!-- EXTRACCIONES -->
-      <section class="cat">
-        <div class="cat-head">
-          <h2 class="cat-title" data-tag="dabs">Extracciones</h2>
-          <div class="cat-line"></div>
-        </div>
-        <div class="items">
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Live Rosin</span><span class="item-price">25€/g</span></div>
-              <p class="item-desc">Prensado en frío, sin solventes.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Shatter</span><span class="item-price">20€/g</span></div>
-              <p class="item-desc">Cristalina y potente.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      <!-- COLUMNA 3 -->
+      <div class="col">
+        <section class="cat">
+          <div class="cat-head">
+            <h2 class="cat-title" data-tag="edibles">Comestibles</h2>
+            <div class="cat-line"></div>
+          </div>
+          <div class="items">
+            <article class="item">
+              <div><div class="item-name">Gomitas 100mg</div><p class="item-desc">10 uds, surtidas.</p></div>
+              <span class="item-price">8€</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Brownie</div><p class="item-desc">Casero, dosis media.</p></div>
+              <span class="item-price">6€</span>
+            </article>
+          </div>
+        </section>
 
-      <!-- COMESTIBLES -->
-      <section class="cat">
-        <div class="cat-head">
-          <h2 class="cat-title" data-tag="edibles">Comestibles</h2>
-          <div class="cat-line"></div>
-        </div>
-        <div class="items">
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Gomitas 100mg</span><span class="item-price">8€</span></div>
-              <p class="item-desc">10 unidades, sabores surtidos.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Brownie</span><span class="item-price">6€</span></div>
-              <p class="item-desc">Casero, dosis media.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- BEBIDAS Y EXTRAS -->
-      <section class="cat">
-        <div class="cat-head">
-          <h2 class="cat-title" data-tag="extras">Bebidas &amp; Extras</h2>
-          <div class="cat-line"></div>
-        </div>
-        <div class="items">
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Refrescos</span><span class="item-price">2€</span></div>
-              <p class="item-desc">Cola, naranja, limón.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Café / Té</span><span class="item-price">1.5€</span></div>
-              <p class="item-desc">Recién hecho.</p>
-            </div>
-          </article>
-          <article class="item">
-            <div class="item-body">
-              <div class="item-top"><span class="item-name">Papers / Filtros</span><span class="item-price">1€</span></div>
-              <p class="item-desc">Set completo para liar.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+        <section class="cat">
+          <div class="cat-head">
+            <h2 class="cat-title" data-tag="extras">Bebidas &amp; Extras</h2>
+            <div class="cat-line"></div>
+          </div>
+          <div class="items">
+            <article class="item">
+              <div><div class="item-name">Refrescos</div><p class="item-desc">Cola, naranja, limón.</p></div>
+              <span class="item-price">2€</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Café / Té</div><p class="item-desc">Recién hecho.</p></div>
+              <span class="item-price">1.5€</span>
+            </article>
+            <article class="item">
+              <div><div class="item-name">Papers / Filtros</div><p class="item-desc">Set para liar.</p></div>
+              <span class="item-price">1€</span>
+            </article>
+          </div>
+        </section>
+      </div>
 
     </main>
+
+    <!-- FOOTER -->
+    <footer class="footbar">
+      <span class="mark">Crazy Spot</span>
+      <span>Solo socios &middot; +18 &middot; Consumo responsable</span>
+    </footer>
+
   </div>
 
-  <footer>
-    <div class="mark">Crazy Spot</div>
-    <p style="margin-top:10px">Solo socios &middot; +18 &middot; Consumo responsable</p>
-  </footer>
-
   <script>
-    // Animación de entrada al hacer scroll
-    const cats = document.querySelectorAll('.cat');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          e.target.style.animationDelay = (i * 0.05) + 's';
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    cats.forEach(c => io.observe(c));
-
-    // Parallax suave del logo
-    const logo = document.querySelector('.logo');
-    window.addEventListener('mousemove', (ev) => {
-      const x = (ev.clientX / window.innerWidth - 0.5) * 14;
-      const y = (ev.clientY / window.innerHeight - 0.5) * 14;
-      logo.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    // Reloj en vivo para la cartelera
+    function tick() {
+      const d = new Date();
+      const h = String(d.getHours()).padStart(2,'0');
+      const m = String(d.getMinutes()).padStart(2,'0');
+      document.getElementById('clock').textContent = h + ':' + m;
+    }
+    tick();
+    setInterval(tick, 1000);
   </script>
 </body>
 </html>
